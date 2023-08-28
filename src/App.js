@@ -1,5 +1,6 @@
 import axios from 'axios'; 
 import {useState} from 'react'; 
+import styled from 'styled-components'
 
 function App() {
   // state 생성 : 변수의 값이 바뀌면 자동 랜더링 
@@ -35,8 +36,14 @@ function App() {
     }
   }
 
+
+
+
+
   return (
-    <div>
+    <AppWap>
+
+    <div className = 'appContentWrap'>
         <input placeholder='도시명을 영문으로 입력 하세요'
           type='text'
           value = {location}
@@ -44,11 +51,47 @@ function App() {
           onKeyDown = {searchWeather}
         />
 
+      {/* result 값이 존재 할때 출력, 아니면 오류 발생  */}
 
+      {
+        Object.keys(result).length !== 0 && (
+          <div> 
+            <div> 도시명 : {result.data.name} </div> 
+            <div> 기온 : { Math.round( (result.data.main.temp - 237.15 ) *10 ) / 10 }  도(c) </div> 
+            <div> 날씨 : { result.data.weather[0].main} </div> 
 
+          </div>
+
+        )
+
+      }
 
     </div>
+
+    </AppWap>
   );
 }
 
 export default App;
+
+const AppWap = styled.div`
+  width : 100vW; 
+  height : 100vh; 
+
+  .appContentWrap {
+    left: 50%; 
+    top : 50%; 
+    position : absolute; 
+    padding : 20px; 
+    transform: translate(-50%, -50%); 
+  }
+
+  input {
+    padding : 16px; 
+    border: 2px block solid; 
+    border-radius: 16px; 
+  }
+
+`
+
+
